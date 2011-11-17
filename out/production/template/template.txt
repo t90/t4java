@@ -1,0 +1,22 @@
+import java.io.*;
+import java.util.*;
+%IMPORTS%
+
+public class %NAME% implements java.lang.Runnable{
+    public %NAME%(){
+    }
+
+    public void run(){
+        try{
+            BufferedWriter out = new BufferedWriter(new FileWriter("%FILENAME%"));
+            %CODE%
+            out.close();
+        }
+        catch(Exception e){
+            e.printStackTrace(System.err);
+        }
+    }
+
+    %METHODS%
+
+}
