@@ -89,11 +89,11 @@ public class TemplateProcessor implements Runnable {
             case Text:
                 KeyValue<Integer, String> keyValue = firstIndexOf(_keys, str);
                 if (keyValue == null) {
-                    str = str.replace("\\", "\\\\");
+                    str = str.replace("\\", "\\\\").replace("\"", "\\\"");
                     out.write(String.format("out.write(\"%s\");", str));
                     out.write("\n");
                 } else {
-                    String passVal = str.substring(0, keyValue.First).replace("\\", "\\\\");
+                    String passVal = str.substring(0, keyValue.First).replace("\\", "\\\\").replace("\"","\\\"");
                     out.write(String.format("out.write(\"%s\");", passVal));
                     out.write("\n");
                     _state = _prefixMapping.get(keyValue.Second);
@@ -188,7 +188,7 @@ public class TemplateProcessor implements Runnable {
             template = template.replace("%CODE%", code);
             template = template.replace("%METHODS%", _methods.toString());
 
-            template = template.replace("%FILENAME%", new File(_outputTemplateName).getAbsolutePath().replace("\\", "\\\\"));
+            template = template.replace("%FILENAME%", new File(_outputTemplateName).getAbsolutePath().replace("\\", "\\\\").replace("\"","\\\""));
 
             BufferedWriter javaCodeWriter = new BufferedWriter(new FileWriter(outFile.getAbsoluteFile()));
             javaCodeWriter.write(template);
