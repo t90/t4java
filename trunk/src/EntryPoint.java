@@ -90,7 +90,11 @@ public class EntryPoint {
             extrDeps = select(extrDeps,new Func<String, String>(){
                 @Override
                 public String run(String param) {
-                    return param.split(":")[0];
+                    String[] split = param.split(":");
+                    if(split.length < 2){
+                        return "";
+                    }
+                    return split[1];
                 }
             });
 
@@ -102,6 +106,8 @@ public class EntryPoint {
                         BufferedReader fReader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
                         String str = null;
                         while((str = fReader.readLine()) != null){
+                            str = str.trim();
+                            if("".equals(str)) continue;
                             retVal.add(new File(str));
                         }
                     }
